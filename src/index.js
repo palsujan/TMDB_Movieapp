@@ -5,7 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes';
+import axios from "axios";
+import { REACT_APP_ACCESS } from './utlis/constants';
 
+// Setup axios
+axios.defaults.baseURL = "https://api.themoviedb.org/3";
+axios.defaults.headers.common['Authorization'] = `Bearer ${REACT_APP_ACCESS}`
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

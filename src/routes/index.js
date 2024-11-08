@@ -5,6 +5,7 @@ import { DetailsPage } from "../pages/DetailsPage";
 import ExplorePage from "../pages/ExplorePage";
 import SearchPage from "../pages/SearchPage";
 
+
 const router = createBrowserRouter([
     {
         path: "/",
