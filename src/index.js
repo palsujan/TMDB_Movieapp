@@ -7,17 +7,22 @@ import { RouterProvider } from 'react-router-dom';
 import router from './routes';
 import axios from "axios";
 import { REACT_APP_ACCESS } from './utlis/constants';
+import { Provider } from 'react-redux';
+import { store } from './utlis/store';
 
 // Setup axios
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
 axios.defaults.headers.common['Authorization'] = `Bearer ${REACT_APP_ACCESS}`
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router}/>
-      {/* <App />
-    </RouterProvider> */}
-  </React.StrictMode>
+  <Provider store={store}>
+        <React.StrictMode>
+        <RouterProvider router={router}/>
+          {/* <App />
+        </RouterProvider> */}
+      </React.StrictMode>
+  </Provider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
