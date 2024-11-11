@@ -6,13 +6,17 @@ import { createSlice } from "@reduxjs/toolkit";
  const movieSlcie = createSlice({
     name:"movies",
     initialState: {
-        bannerData: []
+        bannerData: [],
+        imageURL:""
     },
     reducers:{
         setBannerData:(state,action) =>{
             state.bannerData = action.payload
+        },
+        setImageURL:(state, action)=>{
+            state.imageURL = action.payload
         }
     }
 })
-export const {setBannerData} = movieSlcie.actions
+export const {setBannerData, setImageURL} = movieSlcie.actions
 export default movieSlcie.reducer
