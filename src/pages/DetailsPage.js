@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useFetchDetails from '../components/hooks/useFetchDetails';
 import { useSelector } from 'react-redux';
@@ -6,8 +6,11 @@ import moment from 'moment';
 import Divider from '../components/Divider';
 import useFetch from '../components/hooks/useFetch';
 import HorizontalScrollCard from '../components/HorizontalScrollCard';
+import VideoPlay from '../components/VideoPlay';
 
 export const DetailsPage = () => {
+  const [playVideo, setPlayVideo] = useState(false);
+  const [playVideoId, setPlayVideoId] = useState(""); 
   const imageURL = useSelector(store => store.movies.imageURL);
   const params = useParams();
   const {data} = useFetchDetails(`/${params?.explore}/${params?.id}`);
@@ -16,6 +19,10 @@ export const DetailsPage = () => {
   const {data:recommendationsData} = useFetch(`/${params?.explore}/${params?.id}/recommendations`);
   // console.log("Data",data);
     // console.log("castData",castData);
+    const handlePlayVideo = (data) =>{
+      setPlayVideoId(data);
+      setPlayVideo(true);
+    }
 
     const duration = (Number(data?.runtime)/60).toFixed(1).split(".");
     const writer = castData?.crew?.filter(el=>el?.job === "Writer")?.map(el => el?.name).join(", ");
@@ -39,6 +46,9 @@ export const DetailsPage = () => {
               src={imageURL+data?.poster_path}
               className='h-80 w-60 object-cover rounded'
             />
+             <button
+              onClick={()=>handlePlayVideo(data)} 
+              className='mt-3 w-full py-2 px-4 text-center text-black font-bold rounded bg-white hover:bg-gradient-to-l from-red-500 to-orange-500 shadow-md hover:scale-105 transition-all'>Play Now</button>
         </div>
         <div>
           <h2 className='text-2xl lg:text-4xl font-bold text-white'>
@@ -99,6 +109,12 @@ export const DetailsPage = () => {
         <HorizontalScrollCard data={similarData} heading={`Similar ${params?.explore}`} media_type ={`${params?.explore}`}/>
         <HorizontalScrollCard data={recommendationsData} heading={`Recommendations ${params?.explore}`} media_type ={`${params?.explore}`}/>
       </div>
+      {
+        playVideo && (
+          <VideoPlay data = {playVideoId} close = {() => setPlayVideo(false)} media_type={params?.explore}/>
+        )
+      }
+      
     </div>
   )
 }

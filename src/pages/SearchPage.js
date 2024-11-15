@@ -56,6 +56,7 @@ const SearchPage = () => {
           placeholder='Search...'
           onChange = {(e)=> navigate(`/search?q=${e.target.value}`)}
           className='px-4 py-1 text-lg w-full bg-white rounded-full text-neutral-900 mx-2'
+          value={query.split("%20")?.join("")}             
         />
       </div>
       <div className='container mx-auto'>
