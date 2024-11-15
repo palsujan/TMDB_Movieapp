@@ -3,13 +3,23 @@ import { useSelector } from 'react-redux';
 import moment from "moment"
 import { Link } from 'react-router-dom';
 
-const Card = ({data, trending, index}) => {
+const Card = ({data, trending, index, media_type}) => {
     const imageURL = useSelector(store => store.movies.imageURL);
+    const mediaType = data.media_type?? media_type
   return (
-    <Link to={"/"+data.media_type+"/"+data.id} className='w-full min-w-[230px] max-w-[230px] h-80 overflow-hidden rounded relative cursor-pointer z-10'>
-        <img
+    <Link to={"/"+mediaType+"/"+data.id} className='w-full min-w-[230px] max-w-[230px] h-80 overflow-hidden rounded block relative cursor-pointer z-10 hover:scale-105 translate-all'>
+        {
+          data?.poster_path ? (
+            <img
             src={imageURL + data?.poster_path}
         />
+           ) : (
+            <div className='bg-neutral-800 h-full w-full flex items-center justify-center'>
+               Image not found
+            </div>
+           )
+        }
+
         <div className='absolute top-4'>
             {
                 trending && (
@@ -23,7 +33,7 @@ const Card = ({data, trending, index}) => {
             <h2 className='text-ellipsis line-clamp-1 text-lg font-semibold'>{data?.title || data?.name}</h2>
             <div className='text-sm text-neutral-400 flex justify-between'>
                 <p>{moment(data.release_date).format("MMMM Do YYYY")}</p>
-                <p className='bg-black p -1 rounded-full text-xs text-white'>Rating: {Number(data?.vote_average).toFixed(1)}</p>
+                <p className='bg-black py-1 px-1 rounded-full text-xs text-white'>Rating: {Number(data?.vote_average).toFixed(1)}</p>
             </div>
         </div>
     </Link>

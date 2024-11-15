@@ -11,6 +11,9 @@ const Home = () => {
     // console.log("trendingMovies",trendingMovies);
     // const [nowPlayingData, setNowPlayingData] = useState([]);
     const {data: nowPlayingData} = useFetch('/movie/now_playing');
+    const {data: topRatedData} = useFetch('/movie/top_rated');
+    const {data: popularTvShowData} = useFetch('/tv/popular');
+    const {data: onTheAirShowData} = useFetch('/tv/on_the_air');
     // const fetchPlayingData = async () =>{
     //     try{
     //         const response = await axios.get("/movie/now_playing")
@@ -27,7 +30,11 @@ const Home = () => {
     <div>
         <BannerHome/>
         <HorizontalScrollCard data ={trendingMovies} heading = {"Trending"} trending={"Trending"}/>
-        <HorizontalScrollCard data ={nowPlayingData} heading = {"Now Playing"} />
+        <HorizontalScrollCard data ={nowPlayingData} heading = {"Now Playing"} media_type={"movie"}/>
+        <HorizontalScrollCard data ={topRatedData} heading = {"Top Rated"} 
+        media_type={"movie"}/>
+        <HorizontalScrollCard data ={popularTvShowData} heading = {"Popular Tv Show"}  media_type={"tv"}/>
+        <HorizontalScrollCard data ={onTheAirShowData} heading = {"On The Air"} media_type={"tv"} />
 
     </div>
   )

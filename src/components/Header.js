@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import logo from "../assets/movieaapp_logo.png";
 import userIcon from "../assets/user.png";
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { IoSearchOutline } from "react-icons/io5";
 import { navigation } from '../contants/navigation';
 
 
 const Header = () => {
-    const [searchInput, setSearchInput] = useState('');
+    const location = useLocation(); 
+    const removeSpace = location?.search?.slice(3).split("%20").join(" ");
+;    const [searchInput, setSearchInput] = useState(removeSpace);
     const navigate = useNavigate();
+    // console.log("Location", location?.search?.slice(3));
     const handelSearch = (e) =>{
         setSearchInput(e.target.value);
     }
@@ -25,7 +28,7 @@ const Header = () => {
     }, [searchInput])
     
   return (
-    <div className='fixed top-0 w-full h-16 bg-neutral-950 bg-opacity-75 z-40'>
+    <div className='fixed top-0 w-full h-16 bg-black bg-opacity-75 z-40'>
         <div className="container mx-auto px-3 flex items-center h-full">
             <div>
                 <Link to={"/"}>
